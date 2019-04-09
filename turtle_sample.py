@@ -8,7 +8,7 @@ import turtle
 import math
 window = turtle.Screen()
 window.bgcolor("black")
-window.title("A maze Game")
+window.title('A maze Game')
 window.setup(700,700)
 class Pen(turtle.Turtle):
     def __init__(self):
