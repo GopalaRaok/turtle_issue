@@ -20,7 +20,7 @@ class Pen(turtle.Turtle):
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape("circle")
+        self.shape('circle')
         self.color("blue")
         self.penup()
         self.speed(0)
