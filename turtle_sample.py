@@ -1,14 +1,11 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr  2 23:43:39 2019
 
-@author: Ashika Devaguptapu
-"""
-import turtle
 import math
+
+import turtle
+
 window = turtle.Screen()
 window.bgcolor("black")
-window.title('A maze Game')
+window.title("A maze Game")
 window.setup(700,700)
 class Pen(turtle.Turtle):
     def __init__(self):
@@ -20,7 +17,7 @@ class Pen(turtle.Turtle):
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape('circle')
+        self.shape("circle")
         self.color("blue")
         self.penup()
         self.speed(0)
@@ -48,16 +45,17 @@ class Player(turtle.Turtle):
         if (move_to_x,move_to_y) not in walls:
             self.goto(move_to_x,move_to_y)
     def is_collision(self,other):
-       a=self.xcor() - other.xcor()
-       b=self.ycor() - other.ycor()
-       distance = math.sqrt((a*2)+(b*2))
-       if distance < 5:
+       a=self.xcor()-other.xcor()
+       b=self.ycor()-other.ycor()
+       distance = math.sqrt((a**2) + (b**2))
+       print ("distance",distance)
+       if distance <= 5:
            return True
        else:
            return False
 class Treasure(turtle.Turtle):
     def __init__(self,x,y):
-        turtle.Turtle.__init__(self,x,y)
+        turtle.Turtle.__init__(self)
         self.shape("circle")
         self.color("gold")
         self.penup()
@@ -84,11 +82,11 @@ level_1=['XXXXXXXXXXXXXXXXXXXXXXXXX',
             'X                XXXXXXXX',
             'XXXXXXXXXXXX     XXXXX  X',
             'XXXXXXXXXXXXXXX  XXXXX  X',
-            'XXXT XXXXXXXXXX         X',
-            'XXX                    TX',
+            'XXX  XXXXXXXXXX         X',
+            'XXX                     X',
             'XXX         XXXXXXXXXXXXX',
             'XXXXXXXXXX  XXXXXXXXXXXXX',
-            'XXXXXXXXXX             TX',
+            'XXXXXXXXXX              X',
             'XX   XXXXX              X',
             'XX   XXXXXXXXXXXXX  XXXXX',
             'XX     XXXXXXXXXXX  XXXXX',
@@ -97,9 +95,10 @@ level_1=['XXXXXXXXXXXXXXXXXXXXXXXXX',
             'XXXXXXXXXXXXXXXXXXXXXXXXX'
          ]
 
-
+pen=Pen()
+player=Player()
         
-treasure_list=[""]      
+treasure_list=[]      
 levels.append(level_1)
 def setup_maze(level):
     for y in range(len(level)):
@@ -111,13 +110,12 @@ def setup_maze(level):
                 pen.goto(screen_x,screen_y)
                 pen.stamp()
                 walls.append((screen_x,screen_y))
-            if character =="P":
+            elif character =="P":
                 player.goto(screen_x,screen_y)
-            if character =="T": 
+            elif character =="T":
+               #print("screenxy",screen_x,screen_y)
                treasure_list.append(Treasure(screen_x,screen_y))
-        
-pen=Pen()
-player=Player()
+    
 #treasure=Treasure()
 walls=[]
 setup_maze(levels[1])
@@ -130,10 +128,11 @@ window.tracer(0)
 while True:
     for treasure in treasure_list:
         if player.is_collision(treasure):
-            player.gold = treasure.gold+player.gold
-        print("Player Gold: {}".format(player.gold))
+            player.gold += treasure.gold
+        #print("Player Gold: {}".format(player.gold))
         treasure.destroy()
         treasure_list.remove(treasure)
     window.update()
+
 
         
